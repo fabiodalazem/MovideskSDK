@@ -14,9 +14,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
+
 
 public class MovideskConnector {
 
+	public static String URL_API_V1 = "https://api.movidesk.com/public/v1";
+	//                                 https://api.movidesk.com/public/v1/persons?token=??????
+	
 	public static void main(String[] args) throws Exception {
 		
 		System.out.println("Inicio...");
@@ -25,29 +31,27 @@ public class MovideskConnector {
 		System.out.println("Testing 1 - Send Http GET request");
 		http.sendGet();
 
-		System.out.println("\nTesting 2 - Send Http POST request");
-		http.sendPost();	
+/*		System.out.println("\nTesting 2 - Send Http POST request");
+		http.sendPost();*/	
 	}
 	
 	// HTTP GET request
 	private void sendGet() throws Exception {
 
-		String url = "http://www.google.com/search?q=developer";
+		String url = URL_API_V1;
 
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpGet request = new HttpGet(url);
 
 		// add request header
-		request.addHeader("User-Agent", "USER_AGENT");
+		//request.addHeader("User-Agent", "USER_AGENT");
 
 		HttpResponse response = client.execute(request);
 
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " +
-                       response.getStatusLine().getStatusCode());
+		//System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
-		BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
+		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
 		StringBuffer result = new StringBuffer();
 		String line = "";
@@ -55,8 +59,23 @@ public class MovideskConnector {
 			result.append(line);
 		}
 
-		System.out.println(result.toString());
+		//System.out.println(result.toString());
 
+		Gson g = new Gson();
+		Object o = g.fromJson(result.toString(), Object.class);
+		
+		List<LinkedTreeMap<String, Object>> lst = new ArrayList();
+		if (o instanceof List<?>){
+			lst = (List<LinkedTreeMap<String, Object>>) o;
+		}else{
+			LinkedTreeMap<String, Object> valor1 = (LinkedTreeMap<String, Object>) o;
+			lst.add(valor1);
+		}
+		
+		for(Object v : lst){
+			LinkedTreeMap<String, Object> ltm = (LinkedTreeMap<String, Object>) v;
+			System.out.println(ltm.get("id") + " - " + ltm.get("businessName"));
+		}
 	}
 
 	// HTTP POST request
