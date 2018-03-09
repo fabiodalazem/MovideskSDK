@@ -18,6 +18,8 @@ import org.apache.http.message.BasicNameValuePair;
 public class MovideskConnector {
 
 	public static void main(String[] args) throws Exception {
+		
+		System.out.println("Inicio...");
 		MovideskConnector http = new MovideskConnector();
 
 		System.out.println("Testing 1 - Send Http GET request");
