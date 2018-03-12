@@ -11,6 +11,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -20,8 +22,11 @@ import com.google.gson.internal.LinkedTreeMap;
 
 public class MovideskConnector {
 
-	public static String URL_API_V1 = "https://api.movidesk.com/public/v1";
-	//                                 https://api.movidesk.com/public/v1/persons?token=??????
+	private static String URL_API_V1_PROTOCOL = "https";
+	private static String URL_API_V1_HOST = "api.movidesk.com";
+	private static int URL_API_V1_PORT = 443;
+	private static String URL_API_V1_SERVICE = "/public/v1/";
+	//"https://api.movidesk.com/public/v1/persons?token=??????
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -29,19 +34,30 @@ public class MovideskConnector {
 		MovideskConnector http = new MovideskConnector();
 
 		System.out.println("Testing 1 - Send Http GET request");
-		http.sendGet();
+		http.sendGet("persons", null);
 
 /*		System.out.println("\nTesting 2 - Send Http POST request");
 		http.sendPost();*/	
 	}
 	
 	// HTTP GET request
-	private void sendGet() throws Exception {
+	private void sendGet(String serviceName, List<NameValuePair> params) throws Exception {
 
-		String url = URL_API_V1;
-
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(url);
+		URIBuilder b = new URIBuilder();
+		b.setScheme(URL_API_V1_PROTOCOL);
+		b.setHost(URL_API_V1_HOST);
+		b.setPort(URL_API_V1_PORT);
+		b.setPath(URL_API_V1_SERVICE + serviceName);
+		
+		// Parametros;
+		b.addParameter("token", "eb48b59c-4952-40be-ba49-48b9f6947faa");
+		if (params!=null && !params.isEmpty())
+			b.addParameters(params);
+		//b.addParameter("id", "#200");
+		
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+		HttpGet request = new HttpGet(b.build());
+		//System.out.println(request.getURI());
 
 		// add request header
 		//request.addHeader("User-Agent", "USER_AGENT");
