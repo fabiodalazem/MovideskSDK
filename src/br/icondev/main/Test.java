@@ -1,12 +1,12 @@
 package br.icondev.main;
 
-import org.apache.http.client.utils.URLEncodedUtils;
+import br.icondev.connector.PersonConnector;
 
 public class Test {
+
 	public static void main(String[] args) {
-		System.out.println("teste");
 		
-		URLEncodedUtils u = new URLEncodedUtils();
-		//System.out.println( uparse("id=#100", Charsets.ISO_8859_1) );
+		PersonConnector pc = new PersonConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
+		pc.getById("#200");
 	}
 }
