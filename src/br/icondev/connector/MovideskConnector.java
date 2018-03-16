@@ -30,7 +30,7 @@ public abstract class MovideskConnector {
 	private static String URL_API_V1_SERVICE = "/public/v1/";
 	// "https://api.movidesk.com/public/v1/persons?token=??????
 
-	private String token = ""; 
+	private String token = "";
 
 	/**
 	 * Retornar o serviço: /persons /tickets ou /services
