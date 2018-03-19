@@ -1,13 +1,30 @@
 package br.icondev.entity;
 
-public class MoviPersonEmail {
-	/**
-	  emails; [
-			    {
-			      emailType; Profissional,
-			      email; adm2.condominios@lokatell.com.br,
-			      isDefault; true
-			    }
-			  ],
-	*/
+@SuppressWarnings("serial")
+public class MoviPersonEmail extends MoviEntity {
+	
+	private String emailType;
+	private String email;
+	private Boolean isDefault;
+	
+	public String getEmailType() {
+		return emailType;
+	}
+	public void setEmailType(String emailType) {
+		this.emailType = emailType;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Boolean getIsDefault() {
+		return isDefault;
+	}
+	public void setIsDefault(Boolean isDefault) {
+		this.isDefault = isDefault;
+	}
+	
+	
 }

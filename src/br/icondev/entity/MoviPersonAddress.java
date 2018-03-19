@@ -1,21 +1,17 @@
 package br.icondev.entity;
 
-public class MoviPersonAddress {
-	/**
-	  addresses; [
-	  		    {
-	  		      addressType; Comercial,
-	  		      country; BRASIL,
-	  		      postalCode; 85810-080,
-	  		      state; PR,
-	  		      district; Centro,
-	  		      city; Cascavel,
-	  		      street; Rua Carlos de Carvalho,
-	  		      number; 3380,
-	  		      complement; null,
-	  		      reference; null,
-	  		      isDefault; true
-	  		    }
-	  		  ],
-	 */
+@SuppressWarnings("serial")
+public class MoviPersonAddress extends MoviEntity {
+	
+	private String addressType;
+	private String country;
+	private String postalCode;
+	private String state;
+	private String district;
+	private String city;
+	private String street;
+	private String number;
+	private String complement;
+	private String reference;
+	private Boolean isDefault;
 }

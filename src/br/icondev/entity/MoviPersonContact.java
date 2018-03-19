@@ -1,13 +1,8 @@
 package br.icondev.entity;
 
-public class MoviPersonContact {
-	/**
-	  contacts; [
-	 		    {
-	 		      contactType; Telefone comercial,
-	 		      contact; (45)3037-3137,
-	 		      isDefault; true
-	 		    }
-	 		  ],
-	*/
+@SuppressWarnings("serial")
+public class MoviPersonContact extends MoviEntity {
+     private String contactType;
+     private String contact;
+     private Boolean isDefault;
 }

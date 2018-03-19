@@ -6,8 +6,10 @@ package br.icondev.connector;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -21,6 +23,12 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+
+import com.google.gson.GsonBuilder;
+
+import br.icondev.entity.MoviEntity;
+import br.icondev.entity.MoviPerson;
+import br.icondev.util.DateTimeDeserializer;
 
 public abstract class MovideskConnector {
 
@@ -52,7 +60,7 @@ public abstract class MovideskConnector {
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	protected StringBuffer sendGet(List<NameValuePair> params)
+	protected String sendGet(List<NameValuePair> params)
 			throws URISyntaxException, ClientProtocolException, IOException {
 
 		URIBuilder b = new URIBuilder();
@@ -79,7 +87,7 @@ public abstract class MovideskConnector {
 			//System.out.println(line);
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -120,6 +128,13 @@ public abstract class MovideskConnector {
 
 		System.out.println(result.toString());
 
+	}
+	
+	public <T> T fromJson(String json, Class<T> typeOf){
+		return new GsonBuilder()
+				.registerTypeAdapter(Date.class, new DateTimeDeserializer())
+				.create()
+				.fromJson(json, typeOf);
 	}
 
 }

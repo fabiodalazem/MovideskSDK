@@ -3,7 +3,8 @@ package br.icondev.entity;
 import java.util.Date;
 import java.util.List;
 
-public class MoviPerson {
+@SuppressWarnings("serial")
+public class MoviPerson extends MoviEntity {
 
 	private String id;
 	private String codeReferenceAdditional;
@@ -29,11 +30,194 @@ public class MoviPerson {
 	private String observations;
 	private String authenticateOn;
 
-	private List<MoviPersonAddress> addressess;
+	private List<MoviPersonAddress> addresses;
 	private List<MoviPersonContact> contacts;
 	private List<MoviPersonEmail> emails;
-	private List<MoviPersonTeam> teams;
+	private List<String> teams;
 	private List<MoviPersonRelationship> relationships;
 	private List<MoviPersonCustomFieldValue> customFieldValues;
-
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getCodeReferenceAdditional() {
+		return codeReferenceAdditional;
+	}
+	public void setCodeReferenceAdditional(String codeReferenceAdditional) {
+		this.codeReferenceAdditional = codeReferenceAdditional;
+	}
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+	public int getPersonType() {
+		return personType;
+	}
+	public void setPersonType(int personType) {
+		this.personType = personType;
+	}
+	public int getProfileType() {
+		return profileType;
+	}
+	public void setProfileType(int profileType) {
+		this.profileType = profileType;
+	}
+	public String getAccessProfile() {
+		return accessProfile;
+	}
+	public void setAccessProfile(String accessProfile) {
+		this.accessProfile = accessProfile;
+	}
+	public String getBusinessName() {
+		return businessName;
+	}
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	public String getCorporateName() {
+		return corporateName;
+	}
+	public void setCorporateName(String corporateName) {
+		this.corporateName = corporateName;
+	}
+	public String getCpfCnpj() {
+		return cpfCnpj;
+	}
+	public void setCpfCnpj(String cpfCnpj) {
+		this.cpfCnpj = cpfCnpj;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getBossId() {
+		return bossId;
+	}
+	public void setBossId(String bossId) {
+		this.bossId = bossId;
+	}
+	public String getBossName() {
+		return bossName;
+	}
+	public void setBossName(String bossName) {
+		this.bossName = bossName;
+	}
+	public String getClassification() {
+		return classification;
+	}
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+	public String getCultureId() {
+		return cultureId;
+	}
+	public void setCultureId(String cultureId) {
+		this.cultureId = cultureId;
+	}
+	public String getTimeZoneId() {
+		return timeZoneId;
+	}
+	public void setTimeZoneId(String timeZoneId) {
+		this.timeZoneId = timeZoneId;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getChangedDate() {
+		return changedDate;
+	}
+	public void setChangedDate(Date changedDate) {
+		this.changedDate = changedDate;
+	}
+	public String getChangedBy() {
+		return changedBy;
+	}
+	public void setChangedBy(String changedBy) {
+		this.changedBy = changedBy;
+	}
+	public String getObservations() {
+		return observations;
+	}
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+	public String getAuthenticateOn() {
+		return authenticateOn;
+	}
+	public void setAuthenticateOn(String authenticateOn) {
+		this.authenticateOn = authenticateOn;
+	}
+	public List<MoviPersonAddress> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<MoviPersonAddress> addresses) {
+		this.addresses = addresses;
+	}
+	public List<MoviPersonContact> getContacts() {
+		return contacts;
+	}
+	public void setContacts(List<MoviPersonContact> contacts) {
+		this.contacts = contacts;
+	}
+	public List<MoviPersonEmail> getEmails() {
+		return emails;
+	}
+	
+	public MoviPersonEmail getEmailPrincipal(){
+		for(MoviPersonEmail m: emails){
+			if (m.getIsDefault())
+				return m;
+		}
+		return null;
+	}
+	
+	public void setEmails(List<MoviPersonEmail> emails) {
+		this.emails = emails;
+	}
+	public List<String> getTeams() {
+		return teams;
+	}
+	public void setTeams(List<String> teams) {
+		this.teams = teams;
+	}
+	public List<MoviPersonRelationship> getRelationships() {
+		return relationships;
+	}
+	public void setRelationships(List<MoviPersonRelationship> relationships) {
+		this.relationships = relationships;
+	}
+	public List<MoviPersonCustomFieldValue> getCustomFieldValues() {
+		return customFieldValues;
+	}
+	public void setCustomFieldValues(List<MoviPersonCustomFieldValue> customFieldValues) {
+		this.customFieldValues = customFieldValues;
+	}
 }

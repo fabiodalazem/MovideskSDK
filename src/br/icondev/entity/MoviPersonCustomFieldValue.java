@@ -1,6 +1,7 @@
 package br.icondev.entity;
 
-public class MoviPersonCustomFieldValue {
+@SuppressWarnings("serial")
+public class MoviPersonCustomFieldValue extends MoviEntity {
 	/**
 	  customFieldValues; []
 	 */

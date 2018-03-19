@@ -1,7 +1,6 @@
 package br.icondev.entity;
 
-public class MoviPersonTeam {
-	/**
-	teams; [],
-	*/
+@SuppressWarnings("serial")
+public class MoviPersonTeam extends MoviEntity {
+	
 }
