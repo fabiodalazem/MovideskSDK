@@ -6,7 +6,18 @@ public class MoviPersonEmail extends MoviEntity {
 	private String emailType;
 	private String email;
 	private Boolean isDefault;
+
+	public MoviPersonEmail() {
+		super();
+	}
 	
+	public MoviPersonEmail(String emailType, String email, Boolean isDefault) {
+		super();
+		this.emailType = emailType;
+		this.email = email;
+		this.isDefault = isDefault;
+	}
+
 	public String getEmailType() {
 		return emailType;
 	}
