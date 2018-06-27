@@ -58,18 +58,30 @@ public class MoviPerson extends MoviEntity {
 	public int getPersonType() {
 		return personType;
 	}
+	/**
+	 * Tipo da pessoa. Pessoa = 1, Empresa = 2, Departamento = 4.
+	 * @param personType
+	 */
 	public void setPersonType(int personType) {
 		this.personType = personType;
 	}
 	public int getProfileType() {
 		return profileType;
 	}
+	/**
+	 * Tipo do perfil. Agente = 1, Cliente = 2, Agente e Cliente = 3
+	 * @param profileType
+	 */
 	public void setProfileType(int profileType) {
 		this.profileType = profileType;
 	}
 	public String getAccessProfile() {
 		return accessProfile;
 	}
+	/**
+	 * Campo Perfil de acesso. Deve ser um perfil de acesso já cadastrado no Movidesk. Se informado um perfil de acesso inválido, o sistema retornará erro
+	 * @param accessProfile
+	 */
 	public void setAccessProfile(String accessProfile) {
 		this.accessProfile = accessProfile;
 	}

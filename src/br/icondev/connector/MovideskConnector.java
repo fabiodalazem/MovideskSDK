@@ -4,30 +4,27 @@ package br.icondev.connector;
  * Conexão direta com a API do Movidesk via Post/Get/Patch/Delete
  */
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.GsonBuilder;
 
-import br.icondev.entity.MoviEntity;
-import br.icondev.entity.MoviPerson;
 import br.icondev.util.DateTimeDeserializer;
 
 public abstract class MovideskConnector {
@@ -50,27 +47,29 @@ public abstract class MovideskConnector {
 		this.token = token;
 	}
 
-	/**
-	 * Executa o GET nos serviços da API do Movidesk
-	 * 
-	 * @param serviceName
-	 * @param params
-	 * @return
-	 * @throws URISyntaxException
-	 * @throws ClientProtocolException
-	 * @throws IOException
-	 */
-	protected String sendGet(List<NameValuePair> params)
-			throws URISyntaxException, ClientProtocolException, IOException {
-
+	private URIBuilder getDefaultURIBuilder(){
 		URIBuilder b = new URIBuilder();
 		b.setScheme(URL_API_V1_PROTOCOL);
 		b.setHost(URL_API_V1_HOST);
 		b.setPort(URL_API_V1_PORT);
 		b.setPath(URL_API_V1_SERVICE + getServiceName());
 
-		// Parametros;
+		// Parametros padrão
 		b.addParameter("token", token);
+		return b;
+	}
+	
+	/**
+	 * Executa o GET nos serviços da API do Movidesk
+	 * 
+	 * @param serviceName
+	 * @param params
+	 * @return
+	 * @throws Exception 
+	 */
+	protected String sendGet(List<NameValuePair> params) throws Exception {
+
+		URIBuilder b = getDefaultURIBuilder();
 		if (params != null && !params.isEmpty())
 			b.addParameters(params);
 
@@ -87,48 +86,117 @@ public abstract class MovideskConnector {
 			//System.out.println(line);
 		}
 
+		if (response.getStatusLine().getStatusCode()!=Status.OK.getStatusCode())
+			throw new Exception(result.toString());
+		
 		return result.toString();
 	}
 
 	/**
+	 * Executa o Patch nos serviços da API do Movidesk
 	 * 
-	 * @throws Exception
+	 * @param params
+	 * @return
+	 * @throws Exception 
 	 */
-	protected void sendPost() throws Exception {
+	protected boolean sendPatch(List<NameValuePair> params, String bodyRequest) throws Exception {
 
-		String url = "https://selfsolve.apple.com/wcResults.do";
+		URIBuilder b = getDefaultURIBuilder();
+		if (params != null && !params.isEmpty())
+			b.addParameters(params);
 
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpPost post = new HttpPost(url);
-
-		// add header
-		post.setHeader("User-Agent", "USER_AGENT");
-
-		List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-		urlParameters.add(new BasicNameValuePair("sn", "C02G8416DRJM"));
-		urlParameters.add(new BasicNameValuePair("cn", ""));
-		urlParameters.add(new BasicNameValuePair("locale", ""));
-		urlParameters.add(new BasicNameValuePair("caller", ""));
-		urlParameters.add(new BasicNameValuePair("num", "12345"));
-
-		post.setEntity(new UrlEncodedFormEntity(urlParameters));
-
-		HttpResponse response = client.execute(post);
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + post.getEntity());
-		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
-
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+		HttpPatch request = new HttpPatch(b.build());
+		request.addHeader("Content-Type", MediaType.APPLICATION_JSON);
+		request.setEntity(new StringEntity(bodyRequest, Charset.forName("UTF-8")));
+		
+		HttpResponse response = client.execute(request);
 		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
 		StringBuffer result = new StringBuffer();
 		String line = "";
 		while ((line = rd.readLine()) != null) {
 			result.append(line);
+			//System.out.println(line);
 		}
+		
+		if (response.getStatusLine().getStatusCode()!=Status.OK.getStatusCode())
+			throw new Exception(result.toString());
 
-		System.out.println(result.toString());
-
+		return response.getStatusLine().getStatusCode()==Status.OK.getStatusCode();
 	}
+	
+	
+	/**
+	 * Executa o Patch nos serviços da API do Movidesk
+	 * 
+	 * @param params
+	 * @param bodyRequest
+	 * @return
+	 * @throws Exception 
+	 */
+	protected String sendPost(List<NameValuePair> params, String bodyRequest) throws Exception {
+
+		URIBuilder b = getDefaultURIBuilder();
+		if (params != null && !params.isEmpty())
+			b.addParameters(params);
+
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+		HttpPost request = new HttpPost(b.build());
+		request.addHeader("Content-Type", MediaType.APPLICATION_JSON);
+		request.setEntity(new StringEntity(bodyRequest, Charset.forName("UTF-8")));
+		
+		HttpResponse response = client.execute(request);
+		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+		StringBuffer result = new StringBuffer();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+			//System.out.println(line);
+		}
+		
+		if (response.getStatusLine().getStatusCode()!=Status.OK.getStatusCode())
+			throw new Exception(result.toString());
+
+		return result.toString();
+	}	
+	
+	/**
+	 * Executa o Delete nos serviços da API do Movidesk
+	 * 
+	 * @param params
+	 * @param bodyRequest
+	 * @return
+	 * @throws Exception
+	 */
+	protected boolean sendDelete(List<NameValuePair> params, String bodyRequest) throws Exception {
+
+		URIBuilder b = getDefaultURIBuilder();
+		if (params != null && !params.isEmpty())
+			b.addParameters(params);
+
+		CloseableHttpClient client = HttpClientBuilder.create().build();
+		HttpDelete request = new HttpDelete(b.build());
+		request.addHeader("Content-Type", MediaType.APPLICATION_JSON);
+		//request.setEntity(new StringEntity(bodyRequest, Charset.forName("UTF-8")));
+		
+		HttpResponse response = client.execute(request);
+		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+
+		StringBuffer result = new StringBuffer();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+			//System.out.println(line);
+		}
+		
+		if (response.getStatusLine().getStatusCode()!=Status.OK.getStatusCode())
+			throw new Exception(result.toString());
+
+		//return result.toString();
+		return response.getStatusLine().getStatusCode()==Status.OK.getStatusCode();
+	}	
 	
 	public <T> T fromJson(String json, Class<T> typeOf){
 		return new GsonBuilder()

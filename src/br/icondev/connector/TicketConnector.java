@@ -11,43 +11,44 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import br.icondev.entity.MoviPerson;
+import br.icondev.entity.MoviTicket;
 
 /**
- * Conector com Pessoas da API Movidesk;
+ * Conector com Tickets da API Movidesk;
  * 
  * @author Dalazem
  *
  */
-public class PersonConnector extends MovideskConnector {
+public class TicketConnector extends MovideskConnector {
 
 	@Override
 	protected String getServiceName() {
-		return "persons";
+		return "tickets";
 	}
 	
-	public PersonConnector(String token) {
+	public TicketConnector(String token) {
 		super(token);
 	}
 
 	/**
-	 * Busca uma Pessoa pelo id ou Cod. Referencia
+	 * Busca um ticket
 	 * 
 	 * @param idCode
 	 * @return
 	 * @throws Exception 
 	 */
-	public MoviPerson getPersonById(String id) throws Exception {
+	public MoviTicket getTicketById(String id) throws Exception {
 
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("id", id));
 		
 		String json = sendGet(params);
-		MoviPerson mp =  fromJson(json, MoviPerson.class);
+		MoviTicket mp =  fromJson(json, MoviTicket.class);
 
 		return mp;
 	}
 	
-	public List<MoviPerson> getPersonAll() throws Exception{
+/*	public List<MoviPerson> getPersonAll() throws Exception{
 		
 		String json = sendGet(null);
 		List<MoviPerson> lst =  new GsonBuilder().create().fromJson(json, new TypeToken<ArrayList<MoviPerson>>() {}.getType());
@@ -89,7 +90,7 @@ public class PersonConnector extends MovideskConnector {
 		params.add(new BasicNameValuePair("id", id));
 		
 		return sendDelete(params, id);
-	}
+	}*/
 
 
 
