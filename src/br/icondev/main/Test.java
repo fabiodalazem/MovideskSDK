@@ -3,15 +3,27 @@ package br.icondev.main;
 import java.util.ArrayList;
 
 import br.icondev.connector.PersonConnector;
+import br.icondev.connector.TicketConnector;
 import br.icondev.entity.MoviPerson;
 import br.icondev.entity.MoviPersonEmail;
+import br.icondev.entity.MoviTicket;
 
 public class Test {
 
 	public static void main(String[] args) throws Exception {
 		
-		testPersons();
+		//testPersons();
 		
+		testTickets();
+		
+	}
+	
+	private static void testTickets() throws Exception{
+		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
+		MoviTicket mt = tc.getTicketById("445");
+		System.out.println("Result: " + mt.getSubject() + " --> " + "[" + mt.getBaseStatus() +"] " + mt.getStatus() + " --> " + mt.getJustification() + "\n" +
+				"Origem: " + mt.getOrigin() + "\n" +
+				"Tipo (1=interno, 2=publico): " + mt.getType());
 	}
 
 	private static void testPersons() throws Exception {
