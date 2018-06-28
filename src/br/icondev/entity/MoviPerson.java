@@ -5,7 +5,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class MoviPerson extends MoviEntity {
-
+	
 	private String id;
 	private String codeReferenceAdditional;
 	private Boolean isActive;

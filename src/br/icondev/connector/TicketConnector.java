@@ -29,7 +29,7 @@ public class TicketConnector extends MovideskConnector {
 	public TicketConnector(String token) {
 		super(token);
 	}
-
+	
 	/**
 	 * Busca um ticket
 	 * 
@@ -48,50 +48,49 @@ public class TicketConnector extends MovideskConnector {
 		return mp;
 	}
 	
-/*	public List<MoviPerson> getPersonAll() throws Exception{
-		
-		String json = sendGet(null);
-		List<MoviPerson> lst =  new GsonBuilder().create().fromJson(json, new TypeToken<ArrayList<MoviPerson>>() {}.getType());
-		
-		return lst;
-	}
-	
-	
-	public boolean patchPersonPropertyById(String id, JsonObject o) throws Exception{
-		
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("id", id));
-		
-		return sendPatch(params, o.toString());
-	}
-	
-	
-	public boolean patchPersonById(String id, MoviPerson mp) throws Exception{
-		
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("id", id));
-		
-		return sendPatch(params, mp.toJSON());
-	}
-	
-	public MoviPerson postPerson(MoviPerson mp) throws Exception{
-		
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("returnAllProperties", "true"));
-		
-		String json = sendPost(params, mp.toJSON());
-		mp =  fromJson(json, MoviPerson.class);
-		return mp; 
-	}
-	
-	public boolean deletePerson(String id) throws Exception{
-		
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("id", id));
-		
-		return sendDelete(params, id);
-	}*/
-
+//	public List<MoviPerson> getPersonAll() throws Exception{
+//		
+//		String json = sendGet(null);
+//		List<MoviPerson> lst =  new GsonBuilder().create().fromJson(json, new TypeToken<ArrayList<MoviPerson>>() {}.getType());
+//		
+//		return lst;
+//	}
+//	
+//	
+//	public boolean patchPersonPropertyById(String id, JsonObject o) throws Exception{
+//		
+//		List<NameValuePair> params = new ArrayList<>();
+//		params.add(new BasicNameValuePair("id", id));
+//		
+//		return sendPatch(params, o.toString());
+//	}
+//	
+//	
+//	public boolean patchPersonById(String id, MoviPerson mp) throws Exception{
+//		
+//		List<NameValuePair> params = new ArrayList<>();
+//		params.add(new BasicNameValuePair("id", id));
+//		
+//		return sendPatch(params, mp.toJSON());
+//	}
+//	
+//	public MoviPerson postPerson(MoviPerson mp) throws Exception{
+//		
+//		List<NameValuePair> params = new ArrayList<>();
+//		params.add(new BasicNameValuePair("returnAllProperties", "true"));
+//		
+//		String json = sendPost(params, mp.toJSON());
+//		mp =  fromJson(json, MoviPerson.class);
+//		return mp; 
+//	}
+//	
+//	public boolean deletePerson(String id) throws Exception{
+//		
+//		List<NameValuePair> params = new ArrayList<>();
+//		params.add(new BasicNameValuePair("id", id));
+//		
+//		return sendDelete(params, id);
+//	}
 
 
 }
