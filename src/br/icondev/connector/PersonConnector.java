@@ -12,6 +12,12 @@ import com.google.gson.reflect.TypeToken;
 
 import br.icondev.entity.MoviPerson;
 
+/*
+ * 
+ * LEMBRETE! PERSON: GET / PATCH / POST / DELETE
+ * 
+ */
+
 /**
  * Conector com Pessoas da API Movidesk;
  * 

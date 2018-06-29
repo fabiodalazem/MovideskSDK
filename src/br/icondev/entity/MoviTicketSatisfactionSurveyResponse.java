@@ -14,8 +14,4 @@ public class MoviTicketSatisfactionSurveyResponse extends MoviEntity {
 	private int satisfactionSurveySmileyFacesResponse;
 	private String comments;
 
-	public MoviTicketSatisfactionSurveyResponse() {
-		// TODO Auto-generated constructor stub
-	}
-
 }
