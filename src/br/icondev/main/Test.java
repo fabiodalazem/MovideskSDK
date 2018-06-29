@@ -13,14 +13,6 @@ import br.icondev.entity.MoviTicket;
 
 public class Test {
 	
-	public static void main(String[] args) throws Exception {
-		
-		testPersons();
-		
-		testTickets();
-		
-	}
-	
 	private static void testTickets() throws Exception{
 		
 		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
@@ -34,51 +26,54 @@ public class Test {
 	private static void testPersons() throws Exception {
 		
 		PersonConnector pc = new PersonConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
-		
 		MoviPerson mp = pc.getPersonById("#1000");
 		System.err.println("--------------------------------------------------------------------");
+		System.out.println("{");
 		System.out.println(
 				"Codigo: " + mp.getId() + "\n" +
 						"Nome: " + mp.getBusinessName() + "\n" +
 						"E-mail: " + mp.getEmailPrincipal()
 				);
+		System.out.println("}");
 		
 		
 		List<MoviPerson> lst = pc.getPersonAll();
 		for(MoviPerson mp1: lst){
 			System.err.println("--------------------------------------------------------------------");
+			System.out.println("{");
 			System.out.println(
 					"Codigo: " + mp1.getId() + "\n" +
 							"Nome: " + mp1.getBusinessName() + "\n" +
 							"E-mail: " + mp1.getEmailPrincipal()
 					);
+			System.out.println("}");
 		}
 		
 		
-// 		MoviPerson mp = new MoviPerson();
-//		mp.setBusinessName("Nova Pessoa 998998");
-//		mp.setIsActive(true);
-//		mp.setPersonType(1);
-//		mp.setProfileType(2);
-//		mp.setAccessProfile("Clientes");
-//		mp.setEmails(new ArrayList<MoviPersonEmail>());
-//		mp.getEmails().add(new MoviPersonEmail("Pessoal", "email@gmail.com", false));
-//		mp = pc.postPerson(mp);
-//		System.out.println(mp.getId());
+// 		MoviPerson mp2 = new MoviPerson();
+//		mp2.setBusinessName("Nova Pessoa 998998");
+//		mp2.setIsActive(true);
+//		mp2.setPersonType(1);
+//		mp2.setProfileType(2);
+//		mp2.setAccessProfile("Clientes");
+//		mp2.setEmails(new ArrayList<MoviPersonEmail>());
+//		mp2.getEmails().add(new MoviPersonEmail("Pessoal", "email@gmail.com", false));
+//		mp2 = pc.postPerson(mp2);
+//		System.out.println(mp2.getId());
 //		
 //		
 //		boolean deleted = pc.deletePerson("2b2bddd7-309e-402c-");
 //		System.out.println("Pessoa foi apagada? " + deleted);
 //
 //		
-//		MoviPerson mp = pc.getPersonById("100");
-//		if (mp!=null){
-//			mp.setBusinessName("Fabio Dalazem alteração em " + System.currentTimeMillis());
-//			mp.setCpfCnpj("044.301.149-43");
-//			mp.setClassification("Sicredi");
-//			mp.getEmails().add(new MoviPersonEmail("Profissional", "novoemail@gmail.com", false));
+//		MoviPerson mp3 = pc.getPersonById("100");
+//		if (mp3!=null){
+//			mp3.setBusinessName("Fabio Dalazem alteração em " + System.currentTimeMillis());
+//			mp3.setCpfCnpj("044.301.149-43");
+//			mp3.setClassification("Sicredi");
+//			mp3.getEmails().add(new MoviPersonEmail("Profissional", "novoemail@gmail.com", false));
 //			
-//			if (pc.patchPersonById(mp.getId(), mp))
+//			if (pc.patchPersonById(mp3.getId(), mp3))
 //				System.out.println("Atualizado com sucesso!");
 //			else
 //				System.err.println("Não atualizado!");
@@ -90,8 +85,14 @@ public class Test {
 //		boolean upd = pc.patchPersonPropertyById("100", o);
 //		System.out.println("Alterado: " + upd);
 
+	}
+	
+	public static void main(String[] args) throws Exception {
 		
+		testPersons();
 		
+//		testTickets();
 		
 	}
+	
 }
