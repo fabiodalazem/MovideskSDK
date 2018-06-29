@@ -2,7 +2,8 @@ package br.icondev.entity;
 
 import java.util.Date;
 
-public class MoviTicketSatisfactionSurveyResponse {
+@SuppressWarnings("serial")
+public class MoviTicketSatisfactionSurveyResponse extends MoviEntity {
 	
 	private int id;
 	private MoviPerson responsedBy;

@@ -2,7 +2,8 @@ package br.icondev.entity;
 
 import java.util.Date;
 
-public class MoviTicketOwnerHistory {
+@SuppressWarnings("serial")
+public class MoviTicketOwnerHistory extends MoviEntity {
 	
 	private String ownerTeam;
 	private MoviPerson owner;
@@ -10,9 +11,5 @@ public class MoviTicketOwnerHistory {
 	private double permanencyTimeWorkingTime;
 	private MoviPerson changedBy;
 	private Date changedDate;
-
-	public MoviTicketOwnerHistory() {
-		// TODO Auto-generated constructor stub
-	}
 
 }

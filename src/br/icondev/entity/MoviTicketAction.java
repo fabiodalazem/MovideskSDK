@@ -1,8 +1,10 @@
 package br.icondev.entity;
 
 import java.util.Date;
+import java.util.List;
 
-public class MoviTicketAction {
+@SuppressWarnings("serial")
+public class MoviTicketAction extends MoviEntity {
 
 	private int id;
 	private int type; //Tipo do ticket: 1 = Interno 2 = Público.
@@ -14,9 +16,9 @@ public class MoviTicketAction {
 	private Date createdDate;
 	private MoviPerson createdBy;
 	private Boolean isDeleted;
-//	private List<> timeAppointments;
-//	private List<> attachments;
-//	private List<> tags;
+	private List<MoviTicketActionTimeAppointment> timeAppointments;
+	private List<MoviTicketActionAttachment> attachments;
+	private String tags; //String? "tags": [ "Tag1", "Tag2", "Tag3" ],
 	
 	public MoviTicketAction() {
 		

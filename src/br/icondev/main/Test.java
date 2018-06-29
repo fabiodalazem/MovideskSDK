@@ -22,7 +22,7 @@ public class Test {
 	}
 	
 	private static void testTickets() throws Exception{
-//		https://api.movidesk.com/public/v1/tickets?token=eb48b59c-4952-40be-ba49-48b9f6947faa&$select=id,type
+		
 		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
 		
 		MoviTicket mt = tc.getTicketById("5735");
@@ -42,8 +42,8 @@ public class Test {
 						"Nome: " + mp.getBusinessName() + "\n" +
 						"E-mail: " + mp.getEmailPrincipal()
 				);
-
-
+		
+		
 		List<MoviPerson> lst = pc.getPersonAll();
 		for(MoviPerson mp1: lst){
 			System.err.println("--------------------------------------------------------------------");
@@ -53,8 +53,8 @@ public class Test {
 							"E-mail: " + mp1.getEmailPrincipal()
 					);
 		}
-
-
+		
+		
 // 		MoviPerson mp = new MoviPerson();
 //		mp.setBusinessName("Nova Pessoa 998998");
 //		mp.setIsActive(true);

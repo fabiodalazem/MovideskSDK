@@ -1,6 +1,7 @@
 package br.icondev.entity;
 
-public class MoviTicketClient {
+@SuppressWarnings("serial")
+public class MoviTicketClient extends MoviEntity {
 	
 	private String id;
 	private String businessName;
@@ -10,8 +11,5 @@ public class MoviTicketClient {
 	private int profileType;
 	private Boolean isDeleted;
 	private MoviPerson organization;
-
-	public MoviTicketClient() {
-	}
 
 }

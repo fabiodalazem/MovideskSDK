@@ -1,6 +1,7 @@
 package br.icondev.entity;
 
-public class MoviTicketAsset {
+@SuppressWarnings("serial")
+public class MoviTicketAsset extends MoviEntity {
 	
 	private String id;
 	private String name;
@@ -12,8 +13,5 @@ public class MoviTicketAsset {
 	private String categoryThirdLevel;
 	private Boolean isDeleted;
 
-	public MoviTicketAsset() {
-		// TODO Auto-generated constructor stub
-	}
 
 }

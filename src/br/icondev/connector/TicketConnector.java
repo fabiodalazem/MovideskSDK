@@ -38,13 +38,13 @@ public class TicketConnector extends MovideskConnector {
 	 * @throws Exception 
 	 */
 	public MoviTicket getTicketById(String id) throws Exception {
-
+		
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("id", id));
 		
 		String json = sendGet(params);
-		MoviTicket mp =  fromJson(json, MoviTicket.class);
-
+		MoviTicket mp = fromJson(json, MoviTicket.class);
+		
 		return mp;
 	}
 	
