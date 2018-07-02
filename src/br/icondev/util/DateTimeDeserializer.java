@@ -17,7 +17,7 @@ public class DateTimeDeserializer implements JsonDeserializer<Date> {
 	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
 		String date = json.getAsString();
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 		format.setTimeZone(TimeZone.getTimeZone("UTC"));
 		

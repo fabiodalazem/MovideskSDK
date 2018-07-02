@@ -71,10 +71,10 @@ public class TicketConnector extends MovideskConnector {
 	}
 	
 	
-	public boolean patchTicketById(String id, MoviTicket mt) throws Exception{
+	public boolean patchTicketById(String i, MoviTicket mt) throws Exception{
 		
 		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("id", id));
+		params.add(new BasicNameValuePair("id", i));
 		
 		return sendPatch(params, mt.toJSON());
 	}

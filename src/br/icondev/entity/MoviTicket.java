@@ -210,8 +210,8 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class MoviTicket extends MoviEntity {
-
-	private int id;	// Número do ticket (Somente leitura). 
+	//&&& SE DER ERRO NO ID DO TICKET EM ALGUM MOMENTO, TENTAR MUDAR PARA INT AO INVÉS DE STRING
+	private String id;	// Número do ticket (Somente leitura). Na documentação está como id, coloquei como String
 	private int type; //	✓	Tipo do ticket. 1 = Interno 2 = Público.
 	private String subject;//	350	 	Assunto do ticket.
 	private String category;//	string;	128	 	Nome da categoria do ticket. Deve ser informada uma categoria existente e que esteja relacionada ao tipo e ao serviço (caso este esteja informado) do ticket.
@@ -271,7 +271,7 @@ public class MoviTicket extends MoviEntity {
 	private List<MoviTicketCustomFieldValue> customFieldValues;// Lista com os valores dos campos adicionais do ticket.
 	private List<MoviTicketAsset> assets;// Lista com os ativos do ticket.
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	public Date getCreatedDate() {
@@ -526,7 +526,7 @@ public class MoviTicket extends MoviEntity {
 	public void setChildrenTickets(List<MoviTicket> childrenTickets) {
 		this.childrenTickets = childrenTickets;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public int getType() {
