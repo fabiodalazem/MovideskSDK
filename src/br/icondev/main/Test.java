@@ -1,5 +1,6 @@
 package br.icondev.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import br.icondev.connector.TicketConnector;
 import br.icondev.entity.MoviPerson;
 import br.icondev.entity.MoviPersonEmail;
 import br.icondev.entity.MoviTicket;
+import br.icondev.entity.MoviTicketAction;
+import br.icondev.entity.MoviTicketActionAttachment;
+import br.icondev.entity.MoviTicketActionTimeAppointment;
 
 public class Test {
 	
@@ -41,24 +45,43 @@ public class Test {
 //		mt = tc.postTicket(mt);
 //		System.out.println("Post concluído");
 //		System.out.println(mt.getId());
-		
+//		
 //		MoviTicket mt1 = tc.getTicketById("6025");
-		if (mt!=null){
-			mt.setSubject("Teste do Patch efetuado com sucesso");
-			mt.setStatus("Em desenvolvimento");
-			mt.setJustification("");
-			List<String> a = new ArrayList<>();
-			a.add("Teste");
-			a.add("Outros");
-			mt.setTags(a);
-			mt.setRedmineIssueId(1);
-//			"RedmineIssueId","errorMessage":"Nullable object must have a value."
-			
-			if (tc.patchTicketById(mt.getId(), mt))
-				System.out.println("Atualizado com sucesso!");
-			else
-				System.err.println("Não atualizado!");
-		}
+//		if (mt!=null){
+//			mt.setSubject("Teste");
+//			mt.setStatus("Em desenvolvimento");
+//			mt.setJustification("");
+//			List<String> a = new ArrayList<>();
+//			a.add("Teste");
+//			a.add("Outros");
+//			mt.setTags(a);
+//			mt.setRedmineIssueId(1);// "RedmineIssueId","errorMessage":"Nullable object must have a value."
+//			
+//			MoviTicketAction ma = new MoviTicketAction();
+//			MoviTicketActionAttachment mat = new MoviTicketActionAttachment();
+//			List<MoviTicketAction> listact = new ArrayList<>();
+//			List<MoviTicketActionAttachment> listatt = new ArrayList<>();
+//			
+//			ma.setType(1);
+//			ma.setDescription("Teste efetuado com sucesso");
+//			
+//			File file = new File("C:\\Users\\pc\\Testes.txt");
+//			mat.setFileName(file.getName());
+//			mat.setPath(file.getAbsolutePath());
+//			
+//			listatt.add(mat);
+//			ma.setAttachments(listatt);
+//			listact.add(ma);
+//			mt.setActions(listact);
+//			
+//			System.out.println(file.getName());
+//			System.out.println(file.getAbsolutePath());
+//			
+//			if (tc.patchTicketById(mt.getId(), mt))
+//				System.out.println("Atualizado com sucesso!");
+//			else
+//				System.err.println("Não atualizado!");
+//		}
 		
 	}
 	
