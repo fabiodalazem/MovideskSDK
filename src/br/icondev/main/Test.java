@@ -1,26 +1,27 @@
 package br.icondev.main;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.google.gson.JsonObject;
 
 import br.icondev.connector.PersonConnector;
 import br.icondev.connector.TicketConnector;
 import br.icondev.entity.MoviPerson;
-import br.icondev.entity.MoviPersonEmail;
 import br.icondev.entity.MoviTicket;
-import br.icondev.entity.MoviTicketAction;
-import br.icondev.entity.MoviTicketActionAttachment;
-import br.icondev.entity.MoviTicketActionTimeAppointment;
 
 public class Test {
 	
 	private static void testTickets() throws Exception{
 		
 		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
-		
+//		https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1
 		MoviTicket mt = tc.getTicketById("6025");
 //		System.out.println("Result: " + mt.getSubject() + " --> " + "[" + mt.getBaseStatus() +"] " + mt.getStatus() + " --> " + mt.getJustification() + "\n" +
 //				"Origem: " + mt.getOrigin() + "\n" +
@@ -141,21 +142,83 @@ public class Test {
 //			else
 //				System.err.println("Não atualizado!");
 //		}
-
+		
 		
 //		JsonObject o = new JsonObject();
 //		o.addProperty("businessName", "Nome alteração com Fábio Acentuação");
 //		boolean upd = pc.patchPersonPropertyById("100", o);
 //		System.out.println("Alterado: " + upd);
-
+		
 	}
 	
+	public static JsonObject generateJSON () throws MalformedURLException
+	
+	{
+		File file = new File("C:\\Users\\pc\\Testes.txt");
+	    String s = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
+	        s.replaceAll("/", "\\/");
+	    JsonObject reqparam = new JsonObject();
+	    reqparam.addProperty("fileName", file.getName());
+	    reqparam.addProperty("path", file.getAbsolutePath());
+	    return reqparam;
+	    
+	}
+	
+	public static String executePost(String targetURL, String urlParameters) {
+		  HttpURLConnection connection = null;
+
+		  try {
+		    //Create connection
+		    URL url = new URL(targetURL);
+		    connection = (HttpURLConnection) url.openConnection();
+		    connection.setRequestMethod("POST");
+		    connection.setRequestProperty("Content-Type", 
+		        "application/x-www-form-urlencoded");
+
+		    connection.setRequestProperty("Content-Length", 
+		        Integer.toString(urlParameters.getBytes().length));
+		    connection.setRequestProperty("Content-Language", "en-US");  
+
+		    connection.setUseCaches(false);
+		    connection.setDoOutput(true);
+
+		    //Send request
+		    DataOutputStream wr = new DataOutputStream (
+		        connection.getOutputStream());
+		    wr.writeBytes(urlParameters);
+		    wr.close();
+
+		    //Get Response  
+		    InputStream is = connection.getInputStream();
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		    StringBuffer response = new StringBuffer();
+		    String line;
+		    while ((line = rd.readLine()) != null) {
+		      response.append(line);
+		      response.append('\r');
+		    }
+		    rd.close();
+		    return response.toString();
+		  } catch (Exception e) {
+		    e.printStackTrace();
+		    return null;
+		  } finally {
+		    if (connection != null) {
+		      connection.disconnect();
+		    }
+		  }
+		}
+	
 	public static void main(String[] args) throws Exception {
+		JsonObject requestJson = new JsonObject();
+		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
 		
-//		testPersons();
+		testPersons();
 		
 		testTickets();
 		
+		executePost(url, null);
 	}
-	
 }
+    
+
