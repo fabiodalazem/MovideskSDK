@@ -163,14 +163,13 @@ public class Test {
 		String url1 = scanner.nextLine();
 		System.out.println("Digite o id do trâmite: ");
 		String url2 = scanner.nextLine();
+		scanner.close();
 		
 		url1 = "id=" + url1;
 		url2 = "&actionId=" + url2;
 
 		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&" + url1 + url2;
 		
-//		new StringBuilder().append(url).append(url1).toString();
-//		new StringBuilder().append(url).append(url2).toString();
 		
 		// testPersons();
 
