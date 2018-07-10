@@ -155,9 +155,23 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
+//		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
 		File file = new File("C:\\Users\\pc\\Testes.txt");
+		
+		System.out.println("Digite o id do ticket: ");
+		Scanner scanner = new Scanner(System.in);
+		String url1 = scanner.nextLine();
+		System.out.println("Digite o id do trâmite: ");
+		String url2 = scanner.nextLine();
+		
+		url1 = "id=" + url1;
+		url2 = "&actionId=" + url2;
 
+		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&" + url1 + url2;
+		
+//		new StringBuilder().append(url).append(url1).toString();
+//		new StringBuilder().append(url).append(url2).toString();
+		
 		// testPersons();
 
 		// testTickets();
