@@ -158,23 +158,22 @@ public class Test {
 //		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
 		File file = new File("C:\\Users\\pc\\Testes.txt");
 		
+		// testPersons();
+		
+		// testTickets();
+		
+		//Monta a url de requisição do post, seleciona o id do ticket e o id do trâmite
 		System.out.println("Digite o id do ticket: ");
 		Scanner scanner = new Scanner(System.in);
 		String url1 = scanner.nextLine();
 		System.out.println("Digite o id do trâmite: ");
 		String url2 = scanner.nextLine();
 		scanner.close();
-		
-		url1 = "id=" + url1;
+		url1 = "&id=" + url1;
 		url2 = "&actionId=" + url2;
-
-		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&" + url1 + url2;
+		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa" + url1 + url2;
 		
-		
-		// testPersons();
-
-		// testTickets();
-		
+		//Executa post, está dando certo
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(url);
 		
