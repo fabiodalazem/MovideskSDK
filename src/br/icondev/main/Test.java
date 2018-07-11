@@ -162,28 +162,15 @@ public class Test {
 		
 		// testTickets();
 		
-		//Monta a url de requisição do post, seleciona o id do ticket e o id do trâmite
 		System.out.println("Digite o id do ticket: ");
 		Scanner scanner = new Scanner(System.in);
 		String url1 = scanner.nextLine();
 		System.out.println("Digite o id do trâmite: ");
 		String url2 = scanner.nextLine();
 		scanner.close();
-		url1 = "&id=" + url1;
-		url2 = "&actionId=" + url2;
-		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa" + url1 + url2;
 		
-		//Executa post, está dando certo
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
-		
-		FileBody uploadFilePart = new FileBody(file);
-		MultipartEntity reqEntity = new MultipartEntity();
-		reqEntity.addPart("upload-file", uploadFilePart);
-		httpPost.setEntity(reqEntity);
-		
-		HttpResponse response = httpclient.execute(httpPost);
-		System.out.println(response);
+		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
+		tc.fileUpload(url1, url2, file); // 
 
 	}
 }

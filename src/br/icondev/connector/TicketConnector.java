@@ -1,9 +1,19 @@
 package br.icondev.connector;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.GsonBuilder;
@@ -88,6 +98,26 @@ public class TicketConnector extends MovideskConnector {
 		mt =  fromJson(json, MoviTicket.class);
 		
 		return mt;
-	}		
+	}
+	
+	public void fileUpload(String idticket, String idaction, File file) throws Exception{
+		
+		//Monta a url de requisição do post, seleciona o id do ticket e o id do trâmite
+		idticket = "&id=" + idticket;
+		idaction = "&actionId=" + idaction;
+		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa" + idticket + idaction;
+		
+		//Executa post, está dando certo
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
+		
+		FileBody uploadFilePart = new FileBody(file);
+		MultipartEntity reqEntity = new MultipartEntity();
+		reqEntity.addPart("upload-file", uploadFilePart);
+		httpPost.setEntity(reqEntity);
+		
+		HttpResponse response = httpclient.execute(httpPost);
+		System.out.println(response);
+	}
 	 
 }
