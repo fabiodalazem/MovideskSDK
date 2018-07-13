@@ -1,16 +1,6 @@
 package br.icondev.main;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import br.icondev.connector.PersonConnector;
 import br.icondev.connector.TicketConnector;
@@ -19,10 +9,11 @@ import br.icondev.entity.MoviTicket;
 
 public class Test {
 
+	private static String TOKEN = "eb48b59c-4952-40be-ba49-48b9f6947faa";
+	
 	private static void testTickets() throws Exception {
 
-		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
-		// https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1
+		TicketConnector tc = new TicketConnector(TOKEN);
 		MoviTicket mt = tc.getTicketById("6025");
 		// System.out.println("Result: " + mt.getSubject() + " --> " + "[" +
 		// mt.getBaseStatus() +"] " + mt.getStatus() + " --> " +
@@ -96,7 +87,7 @@ public class Test {
 
 	private static void testPersons() throws Exception {
 
-		PersonConnector pc = new PersonConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
+		PersonConnector pc = new PersonConnector(TOKEN);
 		MoviPerson mp = pc.getPersonById("#8441");
 		System.err.println("--------------------------------------------------------------------");
 		System.out.println("{");
@@ -154,23 +145,29 @@ public class Test {
 
 	}
 
+	private static void testFileUpload() {
+		
+		TicketConnector tc = new TicketConnector(TOKEN);
+		File f = new File("c:/tmp/logo_min_big.png");
+		try {
+			if (tc.fileUpload("6025", "7", f))
+				System.out.println("Sucesso ao subir arquivo!");
+			else
+				System.err.println("Falha ao subir arquivo");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public static void main(String[] args) throws Exception {
-//		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa&id=6025&actionId=1";
-		File file = new File("C:\\Users\\pc\\Testes.txt");
 		
 		// testPersons();
 		
-		// testTickets();
+		 //testTickets();
 		
-		System.out.println("Digite o id do ticket: ");
-		Scanner scanner = new Scanner(System.in);
-		String url1 = scanner.nextLine();
-		System.out.println("Digite o id do trâmite: ");
-		String url2 = scanner.nextLine();
-		scanner.close();
-		
-		TicketConnector tc = new TicketConnector("eb48b59c-4952-40be-ba49-48b9f6947faa");
-		tc.fileUpload(url1, url2, file); // 
+		testFileUpload();
 
 	}
+
 }

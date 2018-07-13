@@ -47,7 +47,7 @@ public abstract class MovideskConnector {
 		this.token = token;
 	}
 
-	private URIBuilder getDefaultURIBuilder(){
+	protected URIBuilder getDefaultURIBuilder(){
 		URIBuilder b = new URIBuilder();
 		b.setScheme(URL_API_V1_PROTOCOL);
 		b.setHost(URL_API_V1_HOST);

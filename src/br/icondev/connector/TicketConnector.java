@@ -1,19 +1,19 @@
 package br.icondev.connector;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.GsonBuilder;
@@ -35,10 +35,18 @@ import br.icondev.entity.MoviTicket;
  *
  */
 public class TicketConnector extends MovideskConnector {
+	
+	private static String SRV_TICKET = "tickets";
+	private static String SRV_UPLOAD = "ticketFileUpload";
+	private String localService = SRV_TICKET;
 
+	private void setServiceName(String serviceName){
+		this.localService = serviceName;
+	}
+	
 	@Override
 	protected String getServiceName() {
-		return "tickets";
+		return localService;
 	}
 	
 	public TicketConnector(String token) {
@@ -57,6 +65,7 @@ public class TicketConnector extends MovideskConnector {
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("id", id));
 		
+		setServiceName(SRV_TICKET);
 		String json = sendGet(params);
 		MoviTicket mt = fromJson(json, MoviTicket.class);
 		
@@ -65,6 +74,7 @@ public class TicketConnector extends MovideskConnector {
 	
 	public List<MoviTicket> getTicketAll() throws Exception{
 		
+		setServiceName(SRV_TICKET);
 		String json = sendGet(null);
 		List<MoviTicket> lst =  new GsonBuilder().create().fromJson(json, new TypeToken<ArrayList<MoviTicket>>() {}.getType());
 		
@@ -77,6 +87,7 @@ public class TicketConnector extends MovideskConnector {
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("id", id));
 		
+		setServiceName(SRV_TICKET);
 		return sendPatch(params, o.toString());
 	}
 	
@@ -85,7 +96,8 @@ public class TicketConnector extends MovideskConnector {
 		
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("id", i));
-		
+
+		setServiceName(SRV_TICKET);
 		return sendPatch(params, mt.toJSON());
 	}
 	
@@ -94,30 +106,34 @@ public class TicketConnector extends MovideskConnector {
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("returnAllProperties", "true"));
 		
+		setServiceName(SRV_TICKET);
 		String json = sendPost(params, mt.toJSON());
 		mt =  fromJson(json, MoviTicket.class);
 		
 		return mt;
 	}
 	
-	public void fileUpload(String idticket, String idaction, File file) throws Exception{
+	public boolean fileUpload(String idticket, String idaction, File file) throws Exception{
 		
-		//Monta a url de requisição do post, seleciona o id do ticket e o id do trâmite
-		idticket = "&id=" + idticket;
-		idaction = "&actionId=" + idaction;
-		String url = "https://api.movidesk.com/public/v1/ticketFileUpload?token=eb48b59c-4952-40be-ba49-48b9f6947faa" + idticket + idaction;
+		setServiceName(SRV_UPLOAD);
 		
-		//Executa post, está dando certo
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(url);
+		URIBuilder uriBuilder = getDefaultURIBuilder();
+		uriBuilder.addParameter("id", idticket);
+		uriBuilder.addParameter("actionId", idaction);
+		
+		HttpClient httpclient = HttpClientBuilder.create().build();
+		HttpPost httpPost = new HttpPost(uriBuilder.build());
 		
 		FileBody uploadFilePart = new FileBody(file);
-		MultipartEntity reqEntity = new MultipartEntity();
+		MultipartEntityBuilder reqEntity = MultipartEntityBuilder.create();
 		reqEntity.addPart("upload-file", uploadFilePart);
-		httpPost.setEntity(reqEntity);
+		httpPost.setEntity(reqEntity.build());
 		
 		HttpResponse response = httpclient.execute(httpPost);
-		System.out.println(response);
+		if (response.getStatusLine().getStatusCode()!=Status.OK.getStatusCode())
+			throw new Exception(response.toString());
+		
+		return true;
 	}
 	 
 }
